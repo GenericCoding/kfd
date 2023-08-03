@@ -1,0 +1,21 @@
+name: Build KFD
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "gh-actions" ]
+
+jobs:
+  build:
+
+    runs-on: macos-12
+
+    steps:
+    - uses: actions/checkout@v3
+      
+    - name: Make IPA
+      run: ./build.sh
+    - uses: actions/upload-artifact@v3
+      with:
+       name: IPA Download
+       path: build/posi0nKFD.ipa
