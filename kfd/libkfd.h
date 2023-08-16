@@ -57,6 +57,7 @@ struct info {
         u64 vid;
         u64 maxfilesperproc;
         char kern_version[512];
+        //char osversion[8];
     } env;
     struct {
         u64 current_map;

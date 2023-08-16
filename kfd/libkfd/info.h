@@ -87,13 +87,18 @@ void info_init(struct kfd* kfd)
     assert_bsd(sysctlbyname("kern.version", &kfd->info.env.kern_version, &size2, NULL, 0));
     print_string(kfd->info.env.kern_version);
     
+    //usize size3 = sizeof(kfd->info.env.osversion);
+    //assert_bsd(sysctlbyname("kern.osversion", &kfd->info.env.kern_version, &size3, NULL, 0));
+    //print_string(kfd->info.env.osversion);
+    
     const u64 number_of_kern_versions = sizeof(kern_versions) / sizeof(kern_versions[0]);
     for (u64 i = 0; i < number_of_kern_versions; i++) {
         const char* current_kern_version = kern_versions[i].kern_version;
+        //const char* current_osversion = kern_versions[i].build_version;
         if (!memcmp(kfd->info.env.kern_version, current_kern_version, strlen(current_kern_version))) {
             kfd->info.env.vid = i;
             print_u64(kfd->info.env.vid);
-           // t1sz_boot = 25ull;
+            t1sz_boot = strstr(current_kern_version, "T8120") != NULL ? 17ull : 25ull;
             return;
         }
     }
